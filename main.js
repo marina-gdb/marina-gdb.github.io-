@@ -44,13 +44,14 @@ Mi trayectoria se ha desarrollado en el ámbito educativo, liderando proyectos d
       'Liderazgo',
     ],
     socials: [
-      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/marina-garcía-del-buey/' }, // Reemplaza con tu URL
-      { label: 'GitHub',   href: 'http://github.com/marina-gdb' },      // Reemplaza con tu URL
+      { label: 'LinkedIn', href: 'https://linkedin.com/in/' }, // Reemplaza con tu URL
+      { label: 'GitHub',   href: 'https://github.com/' },      // Reemplaza con tu URL
     ],
   },
 
   // ── PROYECTOS ────────────────────────────────────────
   // Las categorías (cat) generan los tabs de filtro automáticamente.
+  // link: si tiene URL real, ponla aquí; si es null, el botón abre un modal con `detail`.
   items: [
     {
       id: 1,
@@ -59,8 +60,13 @@ Mi trayectoria se ha desarrollado en el ámbito educativo, liderando proyectos d
       desc: 'Administración y seguimiento de un proyecto de transformación digital en la Red de Universidades Anáhuac. Coordinación entre áreas funcionales, técnicas y directivas; seguimiento de entregables, gestión del cambio y mejora de procesos administrativos.',
       date: '2024 — Actualidad',
       thumb: 'assets/project-1.jpg',
-      link: '#',
+      link: null,          // null = abre modal; pon una URL si tienes enlace externo
       linkLabel: 'Ver detalle',
+      detail: `Participación en la administración y seguimiento de un proyecto institucional de transformación digital orientado a la implementación de un Sistema de Información Estudiantil en la Red de Universidades Anáhuac.
+
+El proyecto involucra coordinación entre áreas funcionales, técnicas y directivas, así como seguimiento de entregables, documentación ejecutiva, reuniones, eventos, limpieza de datos, gestión del cambio y mejora de procesos administrativos y operativos.
+
+Áreas: Gestión de proyectos · Transformación digital · Tecnología educativa · Coordinación institucional · Seguimiento ejecutivo · Documentación y comunicación`,
     },
     {
       id: 2,
@@ -69,8 +75,13 @@ Mi trayectoria se ha desarrollado en el ámbito educativo, liderando proyectos d
       desc: 'Desarrollo conceptual de un negocio de suscripción floral que integra diseño de marca, logística de entregas, experiencia del cliente y planeación estratégica. Propuesta de valor basada en estética, practicidad y personalización.',
       date: 'En desarrollo',
       thumb: 'assets/project-2.jpg',
-      link: '#',
+      link: null,
       linkLabel: 'Ver proyecto',
+      detail: `Desarrollo conceptual de un modelo de negocio basado en la suscripción de arreglos florales. El proyecto busca ofrecer una experiencia estética, práctica y personalizada, integrando flores frescas, diseño de marca, logística de entregas y atención al cliente.
+
+La propuesta combina una visión creativa con elementos estratégicos: definición de planes, frecuencia de entrega, experiencia del usuario, propuesta de valor y operación del servicio.
+
+Áreas: Emprendimiento · Modelo de negocio · Experiencia del cliente · Planeación estratégica · Branding · Logística · Creatividad aplicada`,
     },
     {
       id: 3,
@@ -79,8 +90,13 @@ Mi trayectoria se ha desarrollado en el ámbito educativo, liderando proyectos d
       desc: 'Diseño y desarrollo de un portafolio profesional con arquitectura Single Page Application, utilizando HTML, CSS, JavaScript y herramientas de codificación asistida por IA. Publicado en GitHub Pages.',
       date: '2025',
       thumb: 'assets/project-3.jpg',
-      link: '#',
+      link: null,          // Cuando publiques, pon aquí tu URL de GitHub Pages
       linkLabel: 'Ver sitio',
+      detail: `Diseño y desarrollo de un sitio web personal con arquitectura Single Page Application, utilizando herramientas de codificación asistida por inteligencia artificial. El proyecto incluye estructura web, diseño responsive, navegación interna y publicación mediante GitHub Pages.
+
+Integra conocimientos básicos de desarrollo web con herramientas de inteligencia artificial aplicadas a la programación.
+
+Áreas: HTML · CSS · JavaScript · GitHub Pages · Codificación asistida por IA · Diseño responsive`,
     },
   ],
 
@@ -127,9 +143,9 @@ Mi trayectoria se ha desarrollado en el ámbito educativo, liderando proyectos d
 
   contact: {
     sub: 'Estoy abierta a colaboraciones, proyectos institucionales y nuevas oportunidades. Escríbeme.',
-    email:    'marina@email.com',          // Reemplaza con tu email real
+    email:    'marina.gdb96@gmail.com',
     location: 'Ciudad de México, México',
-    linkedin: 'https://linkedin.com/in/', // Reemplaza con tu URL
+    linkedin: 'https://linkedin.com/in/', // Reemplaza con tu URL de LinkedIn
   },
 
   footer: {
@@ -276,6 +292,13 @@ function renderCards(items) {
     div.setAttribute('role', 'listitem');
     div.dataset.cat = item.cat;
     div.style.animationDelay = `${i * 0.08}s`;
+
+    // Si link es null o '#', el botón abre el modal; si es URL real, abre en nueva pestaña
+    const isExternal = item.link && item.link !== '#';
+    const linkHTML = isExternal
+      ? `<a class="card__link" href="${item.link}" target="_blank" rel="noopener">${item.linkLabel} →</a>`
+      : `<button class="card__link card__link--modal" data-id="${item.id}" aria-haspopup="dialog">${item.linkLabel} →</button>`;
+
     div.innerHTML = `
       <div class="card__thumb-wrap">
         <img
@@ -294,13 +317,20 @@ function renderCards(items) {
         <p class="card__desc">${item.desc}</p>
         <div class="card__footer">
           <span class="card__date">${item.date}</span>
-          <a class="card__link" href="${item.link}" target="_blank" rel="noopener">${item.linkLabel} →</a>
+          ${linkHTML}
         </div>
       </div>
     `;
     grid.appendChild(div);
-    // Observe for animation
     requestAnimationFrame(() => cardObserver.observe(div));
+  });
+
+  // Bind modal buttons (re-bound every render)
+  grid.querySelectorAll('.card__link--modal').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = data.items.find(i => i.id === Number(btn.dataset.id));
+      if (item) openModal(item);
+    });
   });
 }
 
@@ -683,4 +713,133 @@ function initContactForm() {
     notice.textContent = '✓ Redirigiendo a tu cliente de correo…';
     form.reset();
   });
+}
+
+// =========================================================
+//  PROJECT MODAL
+//  Abre un diálogo accesible con el detalle completo del proyecto.
+//  No hay URL externa — todo se muestra dentro de la página.
+// =========================================================
+function openModal(item) {
+  // Inject modal HTML once
+  let overlay = document.getElementById('project-modal');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'project-modal';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'modal-title');
+    overlay.innerHTML = `
+      <div class="modal__backdrop"></div>
+      <div class="modal__panel" tabindex="-1">
+        <button class="modal__close" aria-label="Cerrar">✕</button>
+        <p class="modal__cat" id="modal-cat"></p>
+        <h2 class="modal__title" id="modal-title"></h2>
+        <p class="modal__date" id="modal-date"></p>
+        <div class="modal__body" id="modal-body"></div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // Inject modal styles (avoids extra CSS file)
+    if (!document.getElementById('modal-styles')) {
+      const style = document.createElement('style');
+      style.id = 'modal-styles';
+      style.textContent = `
+        #project-modal {
+          position: fixed; inset: 0; z-index: 2000;
+          display: flex; align-items: center; justify-content: center;
+          opacity: 0; pointer-events: none;
+          transition: opacity 0.3s;
+        }
+        #project-modal.open { opacity: 1; pointer-events: all; }
+        .modal__backdrop {
+          position: absolute; inset: 0;
+          background: rgba(0,0,0,0.65);
+          backdrop-filter: blur(6px);
+          cursor: pointer;
+        }
+        .modal__panel {
+          position: relative; z-index: 1;
+          background: var(--surface);
+          border: 1px solid var(--border-strong);
+          border-radius: var(--radius-lg);
+          padding: clamp(28px,5vw,52px);
+          max-width: min(680px, 92vw);
+          width: 100%;
+          max-height: 85vh;
+          overflow-y: auto;
+          transform: translateY(20px);
+          transition: transform 0.35s var(--ease-out-expo);
+          outline: none;
+        }
+        #project-modal.open .modal__panel { transform: translateY(0); }
+        .modal__close {
+          position: absolute; top: 20px; right: 20px;
+          width: 36px; height: 36px;
+          border-radius: 50%;
+          border: 1px solid var(--border-strong);
+          color: var(--text-muted);
+          font-size: 0.85rem;
+          display: flex; align-items: center; justify-content: center;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+        }
+        .modal__close:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+        .modal__cat {
+          font-family: var(--font-mono);
+          font-size: 0.65rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--accent);
+          margin-bottom: 10px;
+        }
+        .modal__title {
+          font-family: var(--font-display);
+          font-size: clamp(1.4rem, 3vw, 2rem);
+          font-weight: 300;
+          line-height: 1.15;
+          margin-bottom: 8px;
+        }
+        .modal__date {
+          font-family: var(--font-mono);
+          font-size: 0.68rem;
+          letter-spacing: 0.08em;
+          color: var(--text-muted);
+          margin-bottom: 24px;
+        }
+        .modal__body {
+          font-size: 0.93rem;
+          line-height: 1.75;
+          color: var(--text-muted);
+          white-space: pre-line;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // Close handlers
+    overlay.querySelector('.modal__backdrop').addEventListener('click', closeModal);
+    overlay.querySelector('.modal__close').addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  }
+
+  // Populate content
+  document.getElementById('modal-cat').textContent  = item.cat;
+  document.getElementById('modal-title').textContent = item.title;
+  document.getElementById('modal-date').textContent  = item.date;
+  document.getElementById('modal-body').textContent  = item.detail || item.desc;
+
+  // Open
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Focus panel for keyboard nav
+  setTimeout(() => overlay.querySelector('.modal__panel').focus(), 50);
+}
+
+function closeModal() {
+  const overlay = document.getElementById('project-modal');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
 }

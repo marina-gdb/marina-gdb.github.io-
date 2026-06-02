@@ -432,8 +432,12 @@ body.cursor--link-hover .cursor-trail {
   border-radius: var(--radius-md);
   object-fit: cover;
   aspect-ratio: 3/4;
+  min-height: 280px;
+  max-height: 560px;
+  display: block;
   filter: grayscale(20%) contrast(1.05);
   transition: filter 0.4s;
+  background-color: var(--surface-alt); /* placeholder mientras carga */
 }
 .about__photo:hover { filter: grayscale(0%) contrast(1); }
 .about__image-frame {
@@ -601,6 +605,15 @@ body.cursor--link-hover .cursor-trail {
   transition: border-color 0.2s;
 }
 .card__link:hover { border-color: var(--accent); }
+
+/* Botón modal — mismo look, sin estilos de <button> por defecto */
+.card__link--modal {
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  padding: 0 0 1px 0;
+  cursor: pointer;
+}
 
 /* ============================================
    11. TIMELINE
