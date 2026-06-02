@@ -26,7 +26,7 @@ const data = {
   },
 
   about: {
-    photo:    'assets/photo.jpg',   // Reemplaza con tu foto en assets/
+    photo:    'assets/photo.png',   // Reemplaza con tu foto en assets/
     photoAlt: 'Marina García del Buey',
     bio: `Licenciada en Administración y Dirección de Empresas por la Universidad Anáhuac, con doble titulación en International Strategic Management por Coventry University. Actualmente curso la Maestría en Tecnologías de la Información e Inteligencia Analítica.
 
