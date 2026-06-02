@@ -1,0 +1,184 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio profesional" />
+  <title id="page-title">Portfolio</title>
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Cormorant Garamond (display) + DM Mono (mono accent) + Instrument Sans (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- GSAP + ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <!-- Three.js CDN (r160) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js" defer></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== SKIP LINK (A11Y) ===== -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- ===== CURSOR ===== -->
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-trail" aria-hidden="true"></div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" role="navigation" aria-label="Navegación principal">
+    <div class="nav__logo" id="nav-logo" aria-label="Inicio"></div>
+    <ul class="nav__links" role="list">
+      <li><a href="#about" class="nav__link">Sobre mí</a></li>
+      <li><a href="#projects" class="nav__link">Proyectos</a></li>
+      <li><a href="#timeline" class="nav__link">Trayectoria</a></li>
+      <li><a href="#contact" class="nav__link">Contacto</a></li>
+    </ul>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+      <span class="theme-toggle__icon"></span>
+    </button>
+    <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-mobile">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="nav-mobile" aria-hidden="true" role="dialog" aria-label="Menú móvil">
+    <ul role="list">
+      <li><a href="#about" class="nav-mobile__link">Sobre mí</a></li>
+      <li><a href="#projects" class="nav-mobile__link">Proyectos</a></li>
+      <li><a href="#timeline" class="nav-mobile__link">Trayectoria</a></li>
+      <li><a href="#contact" class="nav-mobile__link">Contacto</a></li>
+    </ul>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero" aria-label="Presentación">
+    <!-- Three.js canvas -->
+    <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
+
+    <!-- Grain overlay -->
+    <div class="hero__grain" aria-hidden="true"></div>
+
+    <!-- Horizontal rule top -->
+    <div class="hero__rule" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow" id="hero-eyebrow"></p>
+      <h1 class="hero__name" id="hero-name"></h1>
+      <p class="hero__tagline" id="hero-tagline"></p>
+      <div class="hero__cta-row">
+        <a href="#about" class="btn btn--primary" id="hero-cta-primary"></a>
+        <a href="#" class="btn btn--ghost" id="hero-cta-cv" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
+
+    <div class="hero__scroll-hint" aria-hidden="true">
+      <span class="hero__scroll-line"></span>
+      <span class="hero__scroll-label">scroll</span>
+    </div>
+  </section>
+
+  <!-- ===== MAIN ===== -->
+  <main id="main-content">
+
+    <!-- ===== ABOUT ===== -->
+    <section class="about section" id="about" aria-labelledby="about-heading">
+      <div class="container about__grid">
+        <div class="about__image-wrap reveal-left">
+          <img
+            class="about__photo"
+            id="about-photo"
+            src=""
+            alt=""
+            loading="lazy"
+            width="420"
+            height="520"
+          />
+          <div class="about__image-frame" aria-hidden="true"></div>
+        </div>
+        <div class="about__text reveal-right">
+          <p class="section__label" aria-hidden="true">// 01</p>
+          <h2 class="section__heading" id="about-heading">Sobre mí</h2>
+          <p class="about__bio" id="about-bio"></p>
+          <ul class="about__pills" id="about-pills" role="list" aria-label="Especialidades"></ul>
+          <div class="about__socials" id="about-socials" role="list" aria-label="Redes sociales"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS / PUBLICATIONS ===== -->
+    <section class="projects section" id="projects" aria-labelledby="projects-heading">
+      <div class="container">
+        <div class="section__header reveal-up">
+          <p class="section__label" aria-hidden="true">// 02</p>
+          <h2 class="section__heading" id="projects-heading">Proyectos &amp; Publicaciones</h2>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs" role="tablist" aria-label="Filtrar por categoría" id="filter-tabs"></div>
+
+        <!-- Cards grid -->
+        <div class="cards-grid" id="cards-grid" role="list"></div>
+      </div>
+    </section>
+
+    <!-- ===== TIMELINE ===== -->
+    <section class="timeline-section section" id="timeline" aria-labelledby="timeline-heading">
+      <div class="container">
+        <div class="section__header reveal-up">
+          <p class="section__label" aria-hidden="true">// 03</p>
+          <h2 class="section__heading" id="timeline-heading">Trayectoria</h2>
+        </div>
+        <div class="timeline" id="timeline-list" role="list"></div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="contact section" id="contact" aria-labelledby="contact-heading">
+      <div class="container contact__grid">
+        <div class="contact__intro reveal-left">
+          <p class="section__label" aria-hidden="true">// 04</p>
+          <h2 class="section__heading" id="contact-heading">Contacto</h2>
+          <p class="contact__sub" id="contact-sub"></p>
+          <address class="contact__details" id="contact-details"></address>
+        </div>
+        <form class="contact__form reveal-right" id="contact-form" aria-label="Formulario de contacto" novalidate>
+          <!-- Static mailto form — no backend required -->
+          <div class="form-group">
+            <label for="cf-name">Nombre</label>
+            <input type="text" id="cf-name" name="name" autocomplete="name" required placeholder="Tu nombre" />
+          </div>
+          <div class="form-group">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" autocomplete="email" required placeholder="tu@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="cf-message">Mensaje</label>
+            <textarea id="cf-message" name="message" rows="5" required placeholder="Escribe tu mensaje…"></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Enviar mensaje</button>
+          <p class="form-notice" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p class="footer__copy" id="footer-copy"></p>
+      <div class="footer__links" id="footer-links" role="list"></div>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
