@@ -88,7 +88,7 @@ La propuesta combina una visión creativa con elementos estratégicos: definici�
       cat: 'Digital',
       title: 'Sitio Web Personal SPA',
       desc: 'Diseño y desarrollo de un portafolio profesional con arquitectura Single Page Application, utilizando HTML, CSS, JavaScript y herramientas de codificación asistida por IA. Publicado en GitHub Pages.',
-      date: '2025',
+      date: '2026',
       thumb: 'assets/project-3.jpg',
       link: null,          // Cuando publiques, pon aquí tu URL de GitHub Pages
       linkLabel: 'Ver sitio',
