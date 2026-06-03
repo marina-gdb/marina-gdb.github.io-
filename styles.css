@@ -34,9 +34,9 @@
   --border-strong: rgba(0,0,0,0.20);
   --text:        #1a1714;
   --text-muted:  #6b6460;
-  --accent:      #fae9e1;     /* warm gold */
-  --accent-light:#fde6ec;
-  --accent-dark: #d49a92;
+  --accent:      #d9a39b;     /* warm gold */
+  --accent-light:#f4cfc9;
+  --accent-dark: #a96f68;
   --canvas-bg:   #f0ebe2;
 
   /* Shared */
