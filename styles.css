@@ -34,9 +34,9 @@
   --border-strong: rgba(0,0,0,0.20);
   --text:        #1a1714;
   --text-muted:  #6b6460;
-  --accent:      #b8995a;     /* warm gold */
-  --accent-light:#d4b878;
-  --accent-dark: #8a6e38;
+  --accent:      #fae9e1;     /* warm gold */
+  --accent-light:#fde6ec;
+  --accent-dark: #d49a92;
   --canvas-bg:   #f0ebe2;
 
   /* Shared */
@@ -70,9 +70,9 @@
   --border-strong: rgba(255,255,255,0.16);
   --text:        #edeae4;
   --text-muted:  #8c8780;
-  --accent:      #c9a55a;
-  --accent-light:#e0c07c;
-  --accent-dark: #b8995a;
+  --accent:      #d49a92;
+  --accent-light:#f3c7c4;
+  --accent-dark: #a96f68;
   --canvas-bg:   #0e0d0b;
 }
 
